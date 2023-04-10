@@ -3,6 +3,7 @@ import React, { useState} from 'react'
 const Todo = () => {
         const [inputValue, setInputValue] = useState("");
         const [todos, setTodos] = useState([]);
+        
 
 
         const InputChange = (e) =>{
@@ -12,12 +13,21 @@ const Todo = () => {
         const formSubmit = (e) =>{
           e.preventDefault();
           if(inputValue.trim() == "")return;
-          setTodos([...todos, {
-            id: Date.now(),
-            text: inputValue
-          }])
-          setInputValue("")
+          
+            setTodos([...todos, {
+              id: Date.now(),
+              text: inputValue
+            }])
+            setInputValue("")
+          
+          
         }
+
+        const deleteButton = (id) =>{
+          setTodos(todos.filter((todo) => todo.id !== id))
+        }
+
+
 
     
       return (
@@ -32,9 +42,16 @@ const Todo = () => {
 
 
           <ul>
-            {todos.map((todo)=>(
-              <li key = {todo.id}>{todo.text}</li>
-            ))}
+            {todos.map((todo)=>
+              
+              <li key = {todo.id}>{todo.text}
+              <button onClick={()=>deleteButton(todo.id)}>Delete</button>
+              <button>Edit</button>
+              </li>
+              
+             
+            )}
+             
           </ul>
           
         </>
